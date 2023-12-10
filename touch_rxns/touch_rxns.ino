@@ -22,9 +22,9 @@ const int stepsPerRevolution = 4000;  // change this to fit the number of steps 
 #define IN3 5
 #define IN4 17
 
-#define TOUCH_BEAST 27
+#define TOUCH_BEAST 4
 #define TOUCH_MUSH 2
-#define TOUCH_FISH 4
+#define TOUCH_FISH 27
 #define fairy1 21
 #define fairy2 12
 #define fairy3 26
@@ -33,9 +33,13 @@ const int stepsPerRevolution = 4000;  // change this to fit the number of steps 
 #define mush2 33
 #define mush3 32
 
+#define final_light 22
+
 // initialize the stepper library
 Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
 bool spin = false;
+bool fairy = false;
+bool mushrooms = false;
 
 void setup() {
   // set the speed at 5 rpm
@@ -47,6 +51,8 @@ void setup() {
   pinMode (mush1, OUTPUT);
   pinMode (mush2, OUTPUT);
   pinMode (mush3, OUTPUT);
+
+  pinMode (final_light, OUTPUT);
   // initialize the serial port
   Serial.begin(115200);
 }
@@ -66,7 +72,49 @@ void loop() {
 
   // digitalWrite(ledPin, HIGH);
 
+  // if (touchBeast < 30) {
+  //   digitalWrite(fairy1, HIGH);
+  //   digitalWrite(fairy2, HIGH);
+  //   digitalWrite(fairy3, HIGH);
+  // } else {
+  //   digitalWrite(fairy1, LOW);
+  //   digitalWrite(fairy2, LOW);
+  //   digitalWrite(fairy3, LOW);
+  // }
+
+  // if (touchMush < 30) {
+  //   digitalWrite(mush1, HIGH);
+  //   digitalWrite(mush2, HIGH);
+  //   digitalWrite(mush3, HIGH);
+  // } else {
+  //   digitalWrite(mush1, LOW);
+  //   digitalWrite(mush2, LOW);
+  //   digitalWrite(mush3, LOW);
+  // }
+
   if (touchBeast < 30) {
+    fairy = true;
+  }
+
+  if (touchMush < 30) {
+    mushrooms = true;
+  }
+
+   if (touchFish < 30) {
+    spin = true;
+  } 
+
+  // if (touchFish < 30) {
+  //   spin = true;
+  // } else {
+  //   spin = false;
+  // }
+
+  if (fairy && mushrooms && spin) {
+    digitalWrite(final_light, HIGH);
+  }
+
+  if (fairy) {
     digitalWrite(fairy1, HIGH);
     digitalWrite(fairy2, HIGH);
     digitalWrite(fairy3, HIGH);
@@ -76,7 +124,7 @@ void loop() {
     digitalWrite(fairy3, LOW);
   }
 
-  if (touchMush < 30) {
+  if (mushrooms) {
     digitalWrite(mush1, HIGH);
     digitalWrite(mush2, HIGH);
     digitalWrite(mush3, HIGH);
@@ -84,12 +132,6 @@ void loop() {
     digitalWrite(mush1, LOW);
     digitalWrite(mush2, LOW);
     digitalWrite(mush3, LOW);
-  }
-
-  if (touchFish < 30) {
-    spin = true;
-  } else {
-    spin = false;
   }
 
   if (spin) {
