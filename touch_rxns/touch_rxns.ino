@@ -35,6 +35,10 @@ const int stepsPerRevolution = 4000;  // change this to fit the number of steps 
 
 #define final_light 22
 
+#define portal_3_light1 15
+#define portal_3_light2 16
+#define portal_3_light3 0
+
 // initialize the stepper library
 Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
 bool spin = false;
@@ -53,6 +57,11 @@ void setup() {
   pinMode (mush3, OUTPUT);
 
   pinMode (final_light, OUTPUT);
+
+  pinMode (portal_3_light1, OUTPUT);
+  pinMode (portal_3_light2, OUTPUT);
+  pinMode (portal_3_light3, OUTPUT);
+
   // initialize the serial port
   Serial.begin(115200);
 }
@@ -111,7 +120,9 @@ void loop() {
   // }
 
   if (fairy && mushrooms && spin) {
-    digitalWrite(final_light, HIGH);
+    digitalWrite(portal_3_light1, HIGH);
+    digitalWrite(portal_3_light2, HIGH);
+    digitalWrite(portal_3_light3, HIGH);
   }
 
   if (fairy) {
@@ -135,6 +146,7 @@ void loop() {
   }
 
   if (spin) {
+    digitalWrite(final_light, HIGH);
     myStepper.step(stepsPerRevolution);
   }
 
