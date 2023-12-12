@@ -41,7 +41,7 @@ void loop() {
       pressedButtons[counter] = 1;
       counter++;
       // Serial.println(counter);
-      Serial.println(1);
+      Serial.print(1);
       // Serial.println("The state of button 1 changed from LOW to HIGH");
     } 
   }
@@ -51,7 +51,7 @@ void loop() {
     if (counter < 3) {
         pressedButtons[counter] = 2;
         counter++;
-        Serial.println(2);
+        Serial.print(2);
         // Serial.println(counter);
         // Serial.println("The state of button 2 changed from LOW to HIGH");
       } 
@@ -68,14 +68,14 @@ void loop() {
       if (pressedButtons[i] == correctPress[i]) {
         right = true;
       } else {
-        Serial.println("wrong");
+        Serial.print("wrong");
         right = false;
         break;
       }
     } 
 
     if (right) {
-      Serial.println("right");
+      Serial.print("right");
       for (pos = 90; pos >= 0; pos -= 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
       myservo.write(pos);              // tell servo to go to position in variable 'pos'
