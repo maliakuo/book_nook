@@ -44,6 +44,8 @@ Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
 bool spin = false;
 bool fairy = false;
 bool mushrooms = false;
+String last = "null";
+String current = "null"; 
 
 void setup() {
   // set the speed at 5 rpm
@@ -102,17 +104,31 @@ void loop() {
   // }
 
   if (touchBeast < 30) {
-    Serial.print("fairies");
+    current = "fairies";
+
+    if (!current.equals(last)) {
+      Serial.print(current);
+      last = current;
+    }
+    // Serial.print("fairies");
     fairy = true;
   }
 
   if (touchMush < 30) {
-    Serial.print("mushrooms");
+    current = "mushrooms";
+    if (!current.equals(last)) {
+      Serial.print(current);
+      last = current;
+    }
     mushrooms = true;
   }
 
    if (touchFish < 30) {
-    Serial.print("fish");
+    current = "fish";
+    if (!current.equals(last)) {
+      Serial.print(current);
+      last = current;
+    }
     spin = true;
   } 
 

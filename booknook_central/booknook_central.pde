@@ -20,7 +20,7 @@ StringList chat;
 int xval;
 int yval;
 int iterator;
-boolean stage1 = true;
+boolean stage1;
 
   
 //PFont f;
@@ -31,17 +31,19 @@ void setup() {
   
   print(Serial.list());
   
-  String port1 = Serial.list()[7];
+  String port1 = Serial.list()[8];
   arduino1 = new Serial(this, port1, 9600);
   
-  //String port2 = Serial.list()[5];
-  //arduino2 = new Serial(this, port2, 9600);
+  String port2 = Serial.list()[9];
+  arduino2 = new Serial(this, port2, 9600);
   
   chat = new StringList();
   greeting();
   
   newval = "null";
-  input = "null";
+    input = "null";
+  
+  stage1 = true;
 
   xval = 40;
   yval = 120;
@@ -61,7 +63,7 @@ void draw() {
   textSize(18);
   fill(255);
   
-  readData();
+  readData(stage1);
   
   
   if (!newval.equals("null")) {
@@ -69,7 +71,7 @@ void draw() {
     fill(0);
     //text("you pressed:", 1000, 220);
     text("you pressed: ", 800, 420);
-    text(message, 800, 520);
+    text(input, 800, 520);
   }
   
 
@@ -106,64 +108,68 @@ void draw() {
 //  }
 //}
 
-void readData() {
-  if (arduino1.available() > 0) {  
-      // If data is available,
-      newval = arduino1.readString(); 
-      
-      if (newval.equals("green")) {
-        message = "green";
-      } else if (newval.equals("blue")) {
-        message = "blue";
-      } else if  (newval.equals("bluewrong")) {
-        message = "incorrectly. resetting, try again";
-      } else if (newval.equals("greenwrong")) {
-        message = "incorrectly. resetting, try again";
-      } else if (newval.equals("blueright")) {
-        message = "nice! you can move on";
-      } else {
-        message = "incorrectly. resetting, try again";
-      }
-    }
-}
-//void readData(boolean stage1){
-  
-//  if (stage1) {
-//    if (arduino1.available() > 0) {  
+//void readData() {
+//  if (arduino1.available() > 0) {  
 //      // If data is available,
-//      print("here");
 //      newval = arduino1.readString(); 
-//      print(newval);
       
 //      if (newval.equals("green")) {
-//        message = "green";
+//        input = "green";
 //      } else if (newval.equals("blue")) {
-//        message = "blue";
+//        input = "blue";
 //      } else if  (newval.equals("bluewrong")) {
-//        message = "incorrectly. resetting, try again";
+//        input = "incorrectly. resetting, try again";
 //      } else if (newval.equals("greenwrong")) {
-//        message = "incorrectly. resetting, try again";
+//        input = "incorrectly. resetting, try again";
 //      } else if (newval.equals("blueright")) {
-//        message = "nice! you can move on";
+//        input = "nice! you can move on";
 //      } else {
-//        message = "incorrectly. resetting, try again";
+//        input = "incorrectly. resetting, try again";
 //      }
 //    }
-//  } else {
-//    if (arduino2.available() > 0) {  
-//      // If data is available,
-//      newval = arduino2.readString(); 
-      
-//      if (newval.equals("fairies")) {
-//        message = "fairies";
-//      } else if (newval.equals("mushrooms")) {
-//        message = "mushrooms";
-//      } else if  (newval.equals("fish")) {
-//        message = "fish";
-//      } 
-//    }
-//  }
 //}
+
+void readData(boolean stage1){
+  
+  if (stage1) {
+    if (arduino1.available() > 0) {  
+      // If data is available,
+      print("here");
+      newval = arduino1.readString(); 
+      print(newval);
+      
+      if (newval.equals("green")) {
+        input = "green";
+      } else if (newval.equals("blue")) {
+        input = "blue";
+      } else if  (newval.equals("bluewrong")) {
+        input = "incorrectly. resetting, try again";
+      } else if (newval.equals("greenwrong")) {
+        input = "incorrectly. resetting, try again";
+      } else if (newval.equals("blueright")) {
+        input = "nice! you can move on";
+        stage1 = false;
+      } else {
+        input = "incorrectly. resetting, try again";
+      }
+    }
+  } else
+  {
+    if (arduino2.available() > 0) {  
+      // If data is available,
+      newval = arduino2.readString(); 
+      print(newval);
+      
+      if (newval.equals("fairies")) {
+        input = "fairies";
+      } else if (newval.equals("mushrooms")) {
+        input = "mushrooms";
+      } else {
+        input = "you've finished";
+      }
+    }
+  }
+}
 
 void greeting() {
   chat.append("welcome, destined one");
