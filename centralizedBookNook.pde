@@ -39,12 +39,16 @@ boolean secondRiddle = false;
 boolean winMsg = false;  
   
 //PFont f;
+PFont sixty;
+// The font "andalemo.ttf" must be located in the 
+      // current sketch's "data" directory to load successfully
   
 void setup() {
   fullScreen();
   //size(400, 400);
   
   //print(Serial.list());
+
   
   String port1 = Serial.list()[3];
   arduino1 = new Serial(this, port1, 9600);
@@ -77,11 +81,11 @@ void setup() {
 }
 
 void draw() {
-  background(255, 255, 237);
+  background(25, 25, 25);
   //rect(800, 120, 600, 400);
   
   textSize(18);
-  fill(255);
+  fill(50);
 
   readData();
   
@@ -104,7 +108,7 @@ void draw() {
   
   if (!newval.equals("null")) {
     textSize(24);
-    fill(0);
+    fill(255);
     //text("you pressed:", 1000, 220);
    // text("you pressed: ", 800, 420);
     text(input, 800, 520);
@@ -116,7 +120,14 @@ void draw() {
     //print(message);
     
     textSize(18);
-    fill(0);
+    fill(255);
+   // sixty = createFont("SIXTY.ttf", 128);
+
+
+//background(0);
+   // textFont(sixty);
+  //  text("word", 48, 240);
+    
     int new_y = yval + (i * 20);
     //if (new_y > 200) {
     //  iterator++;
@@ -133,7 +144,7 @@ void draw() {
     //print(message);
     
     textSize(18);
-    fill(0);
+    fill(255);
     int new_y = yval + (i * 20);
     //if (new_y > 200) {
     //  iterator++;
@@ -147,7 +158,7 @@ void draw() {
     //print(message);
     
     textSize(18);
-    fill(0);
+    fill(255);
     int new_y = yval + (i * 20);
     //if (new_y > 200) {
     //  iterator++;
