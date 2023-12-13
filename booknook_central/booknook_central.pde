@@ -134,23 +134,17 @@ void readData(boolean stage1){
   if (stage1) {
     if (arduino1.available() > 0) {  
       // If data is available,
-      print("here");
       newval = arduino1.readString(); 
-      print(newval);
       
       if (newval.equals("green")) {
         input = "green";
       } else if (newval.equals("blue")) {
         input = "blue";
-      } else if  (newval.equals("bluewrong")) {
+      } else if (newval.indexOf("wrong") > -1) {
         input = "incorrectly. resetting, try again";
-      } else if (newval.equals("greenwrong")) {
-        input = "incorrectly. resetting, try again";
-      } else if (newval.equals("blueright")) {
+      } else if (newval.indexOf("right") > -1) {
         input = "nice! you can move on";
         stage1 = false;
-      } else {
-        input = "incorrectly. resetting, try again";
       }
     }
   } else
