@@ -63,7 +63,7 @@ void setup() {
   pinMode (portal_3_light3, OUTPUT);
 
   // initialize the serial port
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -71,13 +71,13 @@ void loop() {
   // Serial.println(touchRead(4));
 
   int touchBeast = touchRead(TOUCH_BEAST);
-  Serial.println(touchBeast);
+  // Serial.println(touchBeast);
 
   int touchFish = touchRead(TOUCH_FISH);
-  Serial.println(touchFish);
+  // Serial.println(touchFish);
 
   int touchMush = touchRead(TOUCH_MUSH);
-  Serial.println(touchMush);
+  // Serial.println(touchMush);
 
   // digitalWrite(ledPin, HIGH);
 
@@ -102,14 +102,17 @@ void loop() {
   // }
 
   if (touchBeast < 30) {
+    Serial.print("fairies");
     fairy = true;
   }
 
   if (touchMush < 30) {
+    Serial.print("mushrooms");
     mushrooms = true;
   }
 
    if (touchFish < 30) {
+    Serial.print("fish");
     spin = true;
   } 
 
@@ -120,6 +123,7 @@ void loop() {
   // }
 
   if (fairy && mushrooms && spin) {
+    Serial.print("done");
     digitalWrite(portal_3_light1, HIGH);
     digitalWrite(portal_3_light2, HIGH);
     digitalWrite(portal_3_light3, HIGH);
