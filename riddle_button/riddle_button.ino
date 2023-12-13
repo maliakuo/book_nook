@@ -41,7 +41,7 @@ void loop() {
       pressedButtons[counter] = 1;
       counter++;
       // Serial.println(counter);
-      Serial.print(1);
+      Serial.print("green");
       // Serial.println("The state of button 1 changed from LOW to HIGH");
     } 
   }
@@ -51,7 +51,7 @@ void loop() {
     if (counter < 3) {
         pressedButtons[counter] = 2;
         counter++;
-        Serial.print(2);
+        Serial.print("blue");
         // Serial.println(counter);
         // Serial.println("The state of button 2 changed from LOW to HIGH");
       } 
@@ -60,7 +60,12 @@ void loop() {
 
   if (counter == 3) {
     // for (int i = 0; i < 3; i++) {
-    //   Serial.println(pressedButtons[i]);
+    //   if (pressedButtons[i] == 1) {
+    //     Serial.print("green,");
+    //   } else {
+    //     Serial.print("blue,");
+    //   }
+    //   // Serial.println(pressedButtons[i]);
     // }
 
 
@@ -68,6 +73,7 @@ void loop() {
       if (pressedButtons[i] == correctPress[i]) {
         right = true;
       } else {
+        // Serial.print(",");
         Serial.print("wrong");
         right = false;
         break;
@@ -75,6 +81,7 @@ void loop() {
     } 
 
     if (right) {
+      // Serial.print(",");
       Serial.print("right");
       for (pos = 90; pos >= 0; pos -= 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
