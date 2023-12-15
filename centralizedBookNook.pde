@@ -19,6 +19,7 @@ StringList chat;
 StringList chat2;
 StringList chat3;
 
+PFont f;
 
 int xval;
 int yval;
@@ -33,6 +34,9 @@ boolean fishies = false;
 
 boolean firstHalfGreeting = false;
 boolean secondHalfGreeting = false;
+boolean chimesPlayed = false;
+
+
 
 boolean secondRiddle = false;
   
@@ -42,6 +46,9 @@ boolean winMsg = false;
 PFont sixty;
 // The font "andalemo.ttf" must be located in the 
       // current sketch's "data" directory to load successfully
+  
+SoundFile chimes;
+SoundFile forest;
   
 void setup() {
   fullScreen();
@@ -56,9 +63,15 @@ void setup() {
   String port2 = Serial.list()[2];
   arduino2 = new Serial(this, port2, 9600);
   
+  chimes = new SoundFile(this, "chimes.mp3");
+  forest = new SoundFile(this, "forest.mp3");
+
+  
   chat = new StringList();
   chat2 = new StringList();
   chat3 = new StringList();
+  
+  f = loadFont("Luminari-Regular-48.vlw");
 //  greeting();
   
  // delay(2000);
@@ -107,11 +120,12 @@ void draw() {
   }
   
   if (!newval.equals("null")) {
-    textSize(24);
+    //textSize(24);
     fill(255);
     //text("you pressed:", 1000, 220);
    // text("you pressed: ", 800, 420);
-    text(input, 800, 520);
+     textFont(f, 24);
+    text(input, 1000, 520);
   }
  
   
@@ -119,7 +133,7 @@ void draw() {
     String message = chat.get(i);
     //print(message);
     
-    textSize(18);
+    //textSize(18);
     fill(255);
    // sixty = createFont("SIXTY.ttf", 128);
 
@@ -133,6 +147,7 @@ void draw() {
     //  iterator++;
     //  break;
     //}
+    textFont(f, 18);
     text(message, xval, new_y);
    
   
@@ -143,13 +158,14 @@ void draw() {
     String message = chat2.get(i);
     //print(message);
     
-    textSize(18);
+    //textSize(18);
     fill(255);
     int new_y = yval + (i * 20);
     //if (new_y > 200) {
     //  iterator++;
     //  break;
     //}
+    textFont(f, 18);
     text(message, xval, new_y);
    
   }
@@ -157,13 +173,14 @@ void draw() {
     String message = chat3.get(i);
     //print(message);
     
-    textSize(18);
+    //textSize(18);
     fill(255);
     int new_y = yval + (i * 20);
     //if (new_y > 200) {
     //  iterator++;
     //  break;
     //}
+    textFont(f, 18);
     text(message, xval, new_y);
    
   }
@@ -189,14 +206,14 @@ void readData(){
 
 
       } else if (newval.indexOf("wrong") > -1) {
-        input = "incorrectly. resetting, try again";
+        input = "incorrect. try again";
 
 
       } else if (newval.indexOf("right") > -1) {
       //  input = "nice! you can move on";
-
+    
         chat = new StringList();
-
+        forest.play();  
         stage1 = false;
       }
     }
@@ -210,16 +227,26 @@ void readData(){
       if(newval.indexOf("stage3") > -1) {
         chat2 = new StringList();
         stage3 = true;
+        //if (chimesPlayed == false) {
+        //  chimes.play();
+        //  chimesPlayed = true; 
+        //}
+        chimes.play();
         input = "You have restored life to the pond";
       } else if (newval.indexOf("fairies") > -1) {
         fairy = true;
-        input = "You have guided the frog";
+       // input = "You have guided the frog";
       } else if (newval.indexOf("mushrooms") > -1) {
         shroom = true;
         input = "You have found the silver stone";
       } else if (newval.indexOf("fish") > -1){
         fishies = true;        
         input = "You have fed the fish";
+        //  if (chimesPlayed == false) {
+        //    chimes.play();
+        //    chimesPlayed = true; 
+        //}
+        chimes.play();  
       }
       //} else if(fairy == true && shroom == true && fishies == true) {
       //  input = "finished!";
@@ -295,8 +322,8 @@ void riddle2(){
 
   chat2.append(".....");
 
-  chat2.append("Guide the frog across the pond's tranquil face,");
-  chat2.append("Let its journey weave the fairies' embrace.");
+  chat2.append("Make a wish with the coin against the silver in the lake,");
+  chat2.append("See the joy in the fairies' it will lovingly create.");
   chat2.append("\n");  
   chat2.append(".....");
   chat2.append("\n");
